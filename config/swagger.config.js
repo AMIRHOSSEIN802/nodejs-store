@@ -9,6 +9,10 @@ function SwaggerConfig(app) {
                 title: "Boto Start Store",
                 description: "nodejs course",
                 version: "2.0.0",
+                contact: {
+                    name: "Amirhossein Balali",
+                    email: "amir.balali83@gmail.com"
+                },
             },
             servers: [
                 {
@@ -16,7 +20,7 @@ function SwaggerConfig(app) {
                 }
             ]
         },
-        apis: ["./app/router/**/*.js"] 
+        apis: ["./app/router/**/*.js "] 
     });
 
     const swagger = swaggerUi.setup(swaggerDocument, {});
