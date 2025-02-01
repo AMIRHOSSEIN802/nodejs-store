@@ -29,27 +29,23 @@ class UserAuthController extends Controller {
     }
   }
 
- async saveUser(mobile, code) {
-    const now = new Date().getTime();
+  async saveUser(mobile, code) {
+    const now = (new Date().getTime())
     let otp = {
       code,
-      expiresIn: now + 120000,
-    };
-    const user = await this.checkExistUser(mobile);
-    if (user) {
-      if (user.otp.expiresIn > now) throw createHttpError.Forbidden("کد اعتبار سنجی قبلی هنوز منقضی نشده است");
-      user.otp = otp;
-      await user.save();
-      return true;
-    } else {
-      const newUser = new UserModel({
-        mobile,
-        otp,
-        Roles: [USER_ROLE]
-      });
-      await newUser.save();
-      return true;
+      expiresIn: now  + 120000,
     }
+    const user = await this.checkExistUser(mobile);
+    if (user){
+      console.log(user.otp, now);
+      if (+user.otp.expiresIn > now) throw createError.Forbidden("کد اعتبار سنجی قبلی هنوز منقضی نشده است")
+      return (await this.updateUser(mobile, { otp }))
+    }
+    return (await UserModel.create({
+      mobile,
+      otp,
+      Role: USER_ROLE
+    }))
   }
   async checkExistUser(mobile) {
     const user = await UserModel.findOne({ mobile });
