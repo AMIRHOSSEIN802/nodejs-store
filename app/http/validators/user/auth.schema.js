@@ -4,4 +4,4 @@ const authSchema = joi.object({
 })
 module.exports = {
     authSchema
-} 
+}

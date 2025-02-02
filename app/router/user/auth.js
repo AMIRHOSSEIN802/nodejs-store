@@ -9,7 +9,7 @@ const router = require("express").Router();
  */
 /**
  * @swagger
- *  /user/login:
+ *  /user/login/{mobile}:
  *      post:
  *          tags: [User-Authentication]
  *          summary : login user in userpanel with phone number
@@ -19,7 +19,7 @@ const router = require("express").Router();
  *            description: fa-IRI phonenumber
  *            required: true
  *            type: string
- *            in: formData
+ *            in: path
  *          responses : 
  *              201:
  *                  description: Success
@@ -32,7 +32,7 @@ const router = require("express").Router();
  */
 
 
-router.post("/login" , UserAuthController.getOtp)
+router.post("/login/:mobile" , UserAuthController.getOtp)
 module.exports ={
     UserAurhRouter : router
 }

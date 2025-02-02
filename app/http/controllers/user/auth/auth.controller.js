@@ -10,8 +10,10 @@ const { randomInt } = require("crypto");
 class UserAuthController extends Controller {
   async getOtp(req, res, next) {
     try {
-      await authSchema.validateAsync(req.body);
-      const {mobile} = req.body;
+      
+      console.log(req.params);
+      await authSchema.validateAsync(req.params);
+      const {mobile} = req.params;
       const code = RandomNumberGenerator()
       const result = await this.saveUser(mobile, code)
       if (!result) throw createHttpError.Unauthorized("ورود شما انجام نشد")
@@ -19,8 +21,8 @@ class UserAuthController extends Controller {
         data: {
           statusCode: 200,
             message: "کد اعتبار سنجی با موفقیت برای شما ارسال شد",
-            code,
-            mobile
+            // code,
+            // mobile
         }
       });
     } catch (error) {
