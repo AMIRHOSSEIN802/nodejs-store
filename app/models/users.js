@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 
 const UserSchema = new Schema ({
     first_name : {type : String},
@@ -16,5 +16,6 @@ const UserSchema = new Schema ({
     birthday : {type : String},
     Roles : {type : [String] , default : ["USER"]}
 });
-const UserModel = model("User" , UserSchema);
-module.exports = UserModel
+module.exports = {
+    UserModel : mongoose.model("user" , UserSchema)
+}
