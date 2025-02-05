@@ -3,35 +3,89 @@ const { UserAuthController } = require("../../http/controllers/user/auth/auth.co
 const router = require("express").Router();
 /**
  * @swagger
- *  tags:
- *      name: User-Authentication
- *      description: user-auth section
+ * tags:
+ *  name: Auth
+ *  description: Authentication Api routs 
  */
 /**
  * @swagger
- *  /user/login/{mobile}:
- *      post:
- *          tags: [User-Authentication]
- *          summary : login user in userpanel with phone number
- *          description : opn time password(OTP) login
- *          parameters: 
- *          - name: mobile
- *            description: fa-IRI phonenumber
- *            required: true
- *            type: string
- *            in: path
- *          responses : 
- *              201:
- *                  description: Success
- *              400:
- *                  description: Bad Request
- *              401:
- *                  description: Unauthorization
- *              500:
- *                  description: Internal Server Error
+ *  components:
+ *      schemas:
+ *          SendOTP:
+ *              type: object
+ *              required:
+ *                  -   mobile
+ *              properties:
+ *                  mobile:
+ *                      type: string
+ *                      default: ''
+ *          CheckOTP:
+ *              type: object
+ *              required:
+ *                  -   mobile
+ *                  -   code
+ *              properties:
+ *                  mobile:
+ *                      type: string
+ *                      default: ""
+ *                  code:
+ *                      type: string
+ *                      default: ""
  */
-
-
+/**
+ * @swagger
+ * /user/login/{mobile}:
+ *  post:
+ *      summary: login with OTP in this end-point
+ *      tags:
+ *          -   Auth
+ *      requestBody:
+ *          content:
+ *              application/x-www-form-urlencoded:
+ *                  schema:
+ *                      $ref: '#/components/schemas/SendOTP'
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/SendOTP'
+ *      responses:
+ *          200:
+ *              description: success
+ */
+/**
+ * @swagger
+ * /user/check-otp:
+ *  post:
+ *      summary: this api for check user otp code.
+ *      tags:
+ *          -   Auth
+ *      requestBody:
+ *          content:
+ *              application/x-www-form-urlencoded:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CheckOTP'
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/CheckOTP'
+ *      responses:
+ *          200:
+ *              description: otp checked successfully
+ */
+/**
+ * @swagger
+ * /auth/refresh-token/{refreshToken}:
+ *  put:
+ *      summary: this request refresh all tokens.
+ *      tags:
+ *          -   Auth
+ *      parameters:
+ *          -   in: path
+ *              name: refreshToken
+ *              required: true
+ *      responses:
+ *          200:
+ *              description: otp checked successfully
+ */
+router.post("/check-otp" , UserAuthController.checkOTP)
 router.post("/login/:mobile" , UserAuthController.getOtp)
 module.exports ={
     UserAurhRouter : router
