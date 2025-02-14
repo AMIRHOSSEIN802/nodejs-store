@@ -20,7 +20,7 @@ function SwaggerConfig(app) {
                 }
             ]
         },
-        apis: ["./app/router/**/*.js "] 
+        apis: ["./app/**/*.js "] 
     });
 
     const swagger = swaggerUi.setup(swaggerDocument, {});
