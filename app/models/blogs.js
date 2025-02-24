@@ -15,4 +15,4 @@ const BlogModelSchema = new Schema({
 const BlogModel = model("blog" , BlogModelSchema)
 module.exports = {
     BlogModel 
-}
+}  

@@ -14,7 +14,6 @@ module.exports = class Application {
     this.#DB_URL = DB_URL;
     this.configApplication();
     this.connectToMongoDB();
-    this.initRedis();
     this.createServer();
     this.createRoutes();
     this.errorHandling();
@@ -57,9 +56,6 @@ module.exports = class Application {
         process.exit(1);
       }
     });
-  }
-  initRedis(){
-    require("./utils/init.redis")
   }
   createRoutes() {
     this.#app.use(AllRoutes);
